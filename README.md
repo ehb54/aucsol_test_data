@@ -1,62 +1,46 @@
-# UltraScan Test Datasets
+# UltraScan Test Data
 
-Public test datasets for UltraScan system testing support.
+Public `.auc` datasets for UltraScan system testing. The repository contains
+synthetic simulator output and curated reference data; it does not contain
+customer, patient, or proprietary third-party data.
 
-All data is lab-owned (samples or simulations). No customer data is present.
+## Choose a dataset
 
+| Dataset | Use case |
+|---|---|
+| [`datasets/generated/base/`](datasets/generated/base/) | Standard synthetic runs using the checked-in simulation parameters |
+| [`datasets/generated/base/samples/`](datasets/generated/base/samples/) | Smaller synthetic runs for tests that do not need full datasets |
+| [`datasets/manual/`](datasets/manual/) | Curated reference datasets added by hand |
 
-## Versioning and Reproducibility
+The generated base dataset covers seven core categories (`ra`, `ri`, `ip`,
+`fi`, `wi`, `ri_mwl`, and `ri_ip`) plus a multi-cell, multi-channel example.
+Each dataset is distributed as a zip and listed in a GNU-format
+`checksums.sha256` file.
 
-This repo uses simple repo-level Git tags (e.g., `v1.0.0`, `v1.1.0`) to mark reproducible states. A tag captures the state of all datasets at that point.
-
-To check out a specific tagged state:
+## Get and verify the data
 
 ```bash
-git checkout v1.2.0
-```
-## Test Development
-
-Test procedures may reference the “latest” release of a dataset to avoid frequent updates to procedural text.
-
-Example:
-Use the latest release of `US_TD_001_DNA_Standards_AUC`.
-
-During test execution, the exact repository tag and successful checksum verification must be recorded.
-## Recording Test Execution
-
-When running tests against this data, record the following:
-
-1. **Repo tag** used (e.g., `v1.2.0`)
-2. **Dataset ID(s)** used (e.g., `US_TD_001_DNA_Standards_AUC`)
-3. **Checksum verification result** — confirm SHA-256 hashes match before use
-
-Example test record entry:
-```
-Dataset: US_TD_001_DNA_Standards_AUC
-Repo tag: v1.2.0
-Checksum verified: PASS (sha256sum -c checksums.sha256)
+git clone git@github.com:ehb54/aucsol_test_data.git
+cd aucsol_test_data
 ```
 
-## SHA-256 Checksum Verification
+Verify a generated tier from its root directory:
 
-SHA-256 checksums are identical across operating systems as long as file bytes are identical. A checksum mismatch means the file is corrupt or was modified.
-
-### Verify existing checksums
-
-**Linux / macOS:**
 ```bash
-cd datasets/US_TD_001_DNA_Standards_AUC
+cd datasets/generated/base
 sha256sum -c checksums.sha256
 ```
 
-**macOS (alternative):**
+On macOS, `shasum` is also available:
+
 ```bash
 shasum -a 256 -c checksums.sha256
 ```
 
-**Windows (PowerShell):**
+On Windows PowerShell:
+
 ```powershell
-cd datasets\US-TD-001_DNA-Standards
+cd datasets\generated\base
 Get-Content checksums.sha256 | ForEach-Object {
     $hash, $file = $_ -split '  '
     $actual = (Get-FileHash $file -Algorithm SHA256).Hash.ToLower()
@@ -64,33 +48,159 @@ Get-Content checksums.sha256 | ForEach-Object {
 }
 ```
 
-### Generate checksums for new files
+A mismatch means the file is corrupt or has changed. The checksum file uses
+two spaces between each hash and filename:
 
-**Linux / macOS:**
+```text
+98d30b93ece674d0dd37ef103dccdfd3445862152bd89188f285f0dd2a70b8ab  ri/dna-monomer-208bp-ri_synthetic.zip
+```
+
+Record the repository tag, dataset path, and checksum result with each test
+execution. For example:
+
+```text
+Dataset: datasets/generated/base/ri/dna-monomer-208bp-ri_synthetic.zip
+Repository tag: 1.0.0
+Checksum verified: PASS
+```
+
+Pin reproducible workflows to a repository tag rather than a moving branch.
+The root `VERSION` file records the current version between tags, and the
+manually triggered [Bump Version workflow](.github/workflows/bump-version.yml)
+prepares version updates.
+
+## Generate synthetic data
+
+The generator runs UltraScan's finite-element simulators headlessly and creates
+one zip per experiment. Generated output has a stable directory and naming
+structure, but separate runs are not guaranteed to be byte-identical.
+
+[`base.json`](config/specs/base.json) is the default dataset spec.
+[`examples.json`](config/specs/examples.json) contains worked examples of the
+schema. Any compatible spec can be selected with `--spec`; its `dataset_name`
+sets the output directory under `datasets/generated/`.
+
+### Requirements
+
+Use the `bin/` directory from an
+[UltraScan Desktop](https://github.com/ehb54/ultrascan3) installation or build.
+The directory must contain these executables:
+
+- `us_sim_inputs_gen`
+- `us_astfem_sim`
+- `us_mwl_species_sim`
+
+The adjacent UltraScan `etc/` directory must also contain the rotor and
+centerpiece definitions used by the simulations. This repository does not
+vendor those binaries or reference files.
+
+### Commands
+
+Run commands from the repository root:
+
+```bash
+# Generate the standard base dataset.
+python3 scripts/generate_synthetic_data.py --us-bin-dir /path/to/ultrascan/bin
+
+# Generate the smaller samples tier.
+python3 scripts/generate_synthetic_data.py --us-bin-dir /path/to/ultrascan/bin --samples
+
+# Validate configuration without generating data.
+python3 scripts/generate_synthetic_data.py --validate
+
+# Use another spec, such as the worked examples.
+python3 scripts/generate_synthetic_data.py --spec examples --us-bin-dir /path/to/ultrascan/bin
+```
+
+Set `US_BIN_DIR` instead of passing `--us-bin-dir` each time. Supplying the
+binary path with `--validate` also enables rotor and centerpiece checks.
+
+The generator is run manually. Review and commit its output; data is not
+created automatically at container startup or in CI.
+
+### Inputs and outputs
+
+Start with the [configuration overview](config/README.md). It explains how a
+spec assembles experiments from independently reusable models, buffers, and
+simulation parameters, including multi-channel geometry and output mapping.
+
+Without `--samples`, each experiment keeps the configured scan count and
+duration. With `--samples`, the generator reduces both according to
+`sample_defaults` and any per-experiment override in the active spec. It rejects
+zero values and values larger than the original simulation.
+
+Each run also updates the tier's `checksums.sha256` and generated `README.md`.
+Change an experiment's `description` in the spec to update its summary entry.
+
+### Data-type relabeling
+
+The UltraScan simulators write `RA`-tagged `.auc` files. For other test
+categories, the generator changes the two-byte type at offset 6 and recomputes
+the trailing little-endian CRC-32.
+
+UltraScan's first CRC call produces an effective initial register of `0`. The
+equivalent Python calculation is:
+
+```python
+import zlib
+
+crc = zlib.crc32(file_bytes[:-4], 0xFFFFFFFF) & 0xFFFFFFFF
+```
+
+### Validation and limitations
+
+`--validate` checks the spec and referenced XML inputs, including sample limits
+and simulation geometry. During type relabeling, the generator checks the
+`UCDA` file signature and recomputes the CRC. These safeguards do not establish
+scientific equivalence to an experimental run.
+
+Known limitations:
+
+- **Wavelength scans (`wi`):** The synthetic `wi` fixture is a relabeled
+  radius-based file. It has the correct type tag but not a true wavelength
+  x-axis because `us_astfem_sim` has no native wavelength-scan mode. Its model
+  is a simulation placeholder.
+- **Signal magnitude:** Checked-in models default to `signal="1"`. Use a
+  channel's `signal` field in the spec to test another magnitude.
+
+## Add or update data
+
+### Generated data
+
+1. Follow the [configuration workflow](config/README.md#add-or-change-configuration)
+   to update an existing spec or add a compatible spec with
+   a unique `dataset_name`.
+2. Add or update model, buffer, or simulation-parameter XML only when the
+   required input does not already exist.
+3. Run the generator with `--spec <name>` when not using `base.json`. Add
+   `--samples` when updating the samples tier.
+4. Review the regenerated zip, checksum file, and README before committing.
+
+Do not edit files under `datasets/generated/` by hand. Their README and
+checksums are generator output.
+
+### Curated reference data
+
+1. Add or replace the zip under
+   `datasets/manual/US_TD_NNN_Short_Description/`.
+2. Regenerate the containing directory's `checksums.sha256`.
+3. Document the dataset's provenance, de-identification, contents, and known
+   limitations when supporting documentation is present.
+
+To generate a GNU-format checksum file for all zips in the current directory:
+
 ```bash
 sha256sum *.zip > checksums.sha256
-# or for all files:
-find . -type f -not -name 'checksums.sha256' | sort | xargs sha256sum > checksums.sha256
 ```
 
-**Windows (PowerShell):**
-```powershell
-Get-ChildItem -File | Where-Object { $_.Name -ne 'checksums.sha256' } | ForEach-Object {
-    $hash = (Get-FileHash $_.Name -Algorithm SHA256).Hash.ToLower()
-    "$hash  $($_.Name)"
-} | Set-Content checksums.sha256
+On macOS:
+
+```bash
+shasum -a 256 *.zip > checksums.sha256
 ```
 
-## Adding or Updating a Dataset
+## Repository boundary
 
-1. Create a folder under `datasets/` using the naming convention `US_TD_NNN_Short_Description`.
-2. Add data files (or upload a zip as a GitHub Release asset if large).
-3. Generate `checksums.sha256` in the dataset folder (see above).
-
-To update an existing dataset, follow the same steps — just overwrite the files and regenerate checksums before tagging.
-
-
-## Public Data Statement
-
-All datasets in this repository are safe for public access. They contain only lab-owned reference samples or simulated data. No customer, patient, or proprietary third-party data is included.
-```
+This repository stores generator code, configuration, and test datasets.
+Simulation executables and runtime reference files remain in the UltraScan
+installation or build tree.

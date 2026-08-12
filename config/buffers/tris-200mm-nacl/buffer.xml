@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE US_Buffer>
+<BufferData version="1.0">
+    <buffer id="0" guid="9a401337-c993-4836-954b-80f43c508f2a" description="50 mM Tris pH 7.5 200 mM NaCl" ph="7.50000" density="1.007900" viscosity="1.03173" compressibility="0.0000e+00" manual="1">
+        <spectrum/>
+    </buffer>
+</BufferData>

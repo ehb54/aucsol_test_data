@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE US_Model>
+<ModelData version="1.0">
+    <model description="Wavelength calibration standard (small molecule, placeholder)" modelGUID="dc30e4b6-1617-493e-b385-22351e93f4ac" editGUID="" wavelength="0" coSedSolute="-1" opticsType="0" analysisType="0" globalType="0">
+        <analyte name="Wavelength calibration standard (small molecule, placeholder)" mw="500" s="2.43717e-14" D="3.94378e-06" f="1.02627e-08" f_f0="1.05" vbar20="0.7" extinction="0" axial="10" sigma="0" delta="0" oligomer="1" shape="0" type="0" molar="0" signal="1"/>
+    </model>
+</ModelData>

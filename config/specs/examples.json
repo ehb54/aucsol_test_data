@@ -1,0 +1,119 @@
+{
+  "_comment": [
+    "Worked examples of the spec-file schema, one experiment per feature,",
+    "meant to be read alongside the code rather than shipped as a real",
+    "dataset. For the full field-by-field schema see base.json's own",
+    "'_comment' block -- not repeated here.",
+    "",
+    "Run with: python3 scripts/generate_synthetic_data.py --spec examples --us-bin-dir /path/to/bin",
+    "Validate without a build: python3 scripts/generate_synthetic_data.py --spec examples --validate",
+    "",
+    "example-single-cell        Smallest possible experiment: one channel,",
+    "                           no centerpiece override, default simparams.",
+    "example-reference-channel  Two channels sharing one physical cell;",
+    "                           channel B is made noisier via",
+    "                           SAFE_OVERRIDE_KEYS",
+    "                           (rnoise/baseline) instead of a second model.",
+    "example-multi-wavelength   One channel scanned at several wavelengths",
+    "                           (the 'wavelengths'/'mwl_run_id' fields),",
+    "                           run through us_mwl_species_sim instead of",
+    "                           us_astfem_sim.",
+    "example-dual-tag           One physical channel, simulated once, its",
+    "                           output copied and relabeled two ways (the",
+    "                           'RI/IP' data_type convention) instead of",
+    "                           simulating it twice.",
+    "example-reduced-run-override  Same as example-single-cell, but overrides",
+    "                           the global sample_defaults for its own",
+    "                           --samples tier via the per-experiment",
+    "                           'samples' object.",
+    "example-multicell          The full multi-cell/multi-channel case:",
+    "                           2 physical cells (centerpiece indices 2 and 4),",
+    "                           2 channels each, mixing plain/noisy/mwl",
+    "                           channels -- and why it needs its own",
+    "                           simparams (config/simparams/multicell/),",
+    "                           since centerpiece indices 2/4 have",
+    "                           bottom=7.15, not the default 7.2. Run",
+    "                           --validate --us-bin-dir ... to see this",
+    "                           checked automatically."
+  ],
+  "dataset_name": "examples",
+  "sample_defaults": {
+    "scans": 4,
+    "duration_hrs": 0,
+    "duration_mins": 20
+  },
+  "experiments": [
+    {
+      "id": "example-single-cell",
+      "dir": "single-cell",
+      "simparams": "default",
+      "rotor": "1",
+      "description": "Single channel, no centerpiece override",
+      "channels": [
+        {"channel": "1A", "model": "netrin1", "buffer": "tris-200mm-nacl", "data_type": "RA"}
+      ]
+    },
+    {
+      "id": "example-reference-channel",
+      "dir": "reference-channel",
+      "simparams": "default",
+      "rotor": "1",
+      "description": "Paired channels in one cell; channel B adds noise and baseline",
+      "channels": [
+        {"channel": "1A", "model": "dna-monomer-208bp", "buffer": "tris-edta-nacl", "data_type": "RI"},
+        {"channel": "1B", "model": "dna-monomer-208bp", "buffer": "tris-edta-nacl", "data_type": "RI", "rnoise": 0.01, "baseline": 0.002}
+      ]
+    },
+    {
+      "id": "example-multi-wavelength",
+      "dir": "multi-wavelength",
+      "simparams": "default",
+      "rotor": "1",
+      "description": "DNA fragment scanned at 3 wavelengths",
+      "channels": [
+        {
+          "channel": "1A",
+          "model": "dna-196bp-ms",
+          "buffer": "cacl2-tris-nacl",
+          "data_type": "RI",
+          "wavelengths": "250,280,310",
+          "mwl_run_id": "example-mwl-001"
+        }
+      ]
+    },
+    {
+      "id": "example-dual-tag",
+      "dir": "dual-tag",
+      "simparams": "default",
+      "rotor": "1",
+      "description": "One physical channel, tagged both RI and IP",
+      "channels": [
+        {"channel": "1A", "model": "dna-monomer-208bp", "buffer": "tris-edta-nacl", "data_type": "RI/IP"}
+      ]
+    },
+    {
+      "id": "example-reduced-run-override",
+      "dir": "reduced-run-override",
+      "simparams": "default",
+      "rotor": "1",
+      "description": "Per-experiment scan and duration limits for --samples",
+      "samples": {"scans": 2, "duration_hrs": 0, "duration_mins": 10},
+      "channels": [
+        {"channel": "1A", "model": "netrin1", "buffer": "tris-200mm-nacl", "data_type": "RA"}
+      ]
+    },
+    {
+      "id": "example-multicell",
+      "dir": "multicell",
+      "simparams": "multicell",
+      "rotor": "1",
+      "description": "Multi-cell x multi-channel: 2 cells, 2 channels each, one channel mwl, one channel noisier",
+      "channels": [
+        {"channel": "1A", "model": "netrin1", "buffer": "tris-200mm-nacl", "data_type": "RA", "centerpiece": 2, "centerpiece_channel": 0},
+        {"channel": "1B", "model": "netrin1", "buffer": "tris-200mm-nacl", "data_type": "RA", "centerpiece": 2, "centerpiece_channel": 0, "rnoise": 0.01, "baseline": 0.002},
+        {"channel": "2A", "model": "dna-monomer-208bp", "buffer": "tris-edta-nacl", "data_type": "RI", "centerpiece": 4, "centerpiece_channel": 0, "wavelengths": "250,280,310", "mwl_run_id": "example-multicell-mwl-001"},
+        {"channel": "2B", "model": "dna-monomer-208bp", "buffer": "tris-edta-nacl", "data_type": "IP", "centerpiece": 4, "centerpiece_channel": 0}
+      ]
+    }
+  ]
+}

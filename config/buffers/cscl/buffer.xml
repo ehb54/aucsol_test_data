@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE US_Buffer>
+<BufferData version="1.0">
+    <buffer id="0" guid="eb23bfbd-0e43-4e10-844f-c086fd4bbf12" description="CsCl" ph="7.00000" density="1.238660" viscosity="2.63866" compressibility="0.0000e+00" manual="1">
+        <spectrum/>
+    </buffer>
+</BufferData>
