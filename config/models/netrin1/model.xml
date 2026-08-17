@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE US_Model>
-<ModelData version="1.0">
-    <model description="Netrin1 (protein, globular)" modelGUID="f0878ce1-8036-4e8a-9ed1-26e3f745f993" editGUID="" wavelength="0" coSedSolute="-1" opticsType="0" analysisType="0" globalType="0">
-        <analyte name="Netrin1 (protein, globular)" mw="49535" s="4.33564e-13" D="7.41074e-07" f="5.4615e-08" f_f0="1.2" vbar20="0.7134" extinction="0" axial="10" sigma="0" delta="0" oligomer="1" shape="0" type="0" molar="0" signal="1"/>
-    </model>
-</ModelData>

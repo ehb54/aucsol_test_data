@@ -4,6 +4,11 @@ Public `.auc` datasets for UltraScan system testing. The repository contains
 synthetic simulator output and curated reference data; it does not contain
 customer, patient, or proprietary third-party data.
 
+This repository holds **data artifacts only**. The generator that produces the
+synthetic datasets, and the model, buffer, and simulation-parameter
+configuration it reads, are maintained separately and are not part of this
+repository. Nothing here is executable.
+
 ## Choose a dataset
 
 | Dataset | Use case |
@@ -11,11 +16,6 @@ customer, patient, or proprietary third-party data.
 | [`datasets/generated/base/`](datasets/generated/base/) | Standard synthetic runs using the checked-in simulation parameters |
 | [`datasets/generated/base/samples/`](datasets/generated/base/samples/) | Smaller synthetic runs for tests that do not need full datasets |
 | [`datasets/manual/`](datasets/manual/) | Curated reference datasets added by hand |
-
-The generated base dataset covers seven core categories (`ra`, `ri`, `ip`,
-`fi`, `wi`, `ri_mwl`, and `ri_ip`) plus a multi-cell, multi-channel example.
-Each dataset is distributed as a zip and listed in a GNU-format
-`checksums.sha256` file.
 
 ## Get and verify the data
 
@@ -65,72 +65,24 @@ Checksum verified: PASS
 ```
 
 Pin reproducible workflows to a repository tag rather than a moving branch.
-The root `VERSION` file records the current version between tags, and the
-manually triggered [Bump Version workflow](.github/workflows/bump-version.yml)
-prepares version updates.
+The root `VERSION` file records the current version.
 
-## Generate synthetic data
+## About the generated data
 
-The generator runs UltraScan's finite-element simulators headlessly and creates
-one zip per experiment. Generated output has a stable directory and naming
-structure, but separate runs are not guaranteed to be byte-identical.
+### Which revision produced a dataset
 
-[`base.json`](config/specs/base.json) is the default dataset spec.
-[`examples.json`](config/specs/examples.json) contains worked examples of the
-schema. Any compatible spec can be selected with `--spec`; its `dataset_name`
-sets the output directory under `datasets/generated/`.
+Because the data and the generator now live in separate repositories, each
+generated tier's `README.md` is stamped with the LIMS generator commit that
+produced it, and with whether that working tree had uncommitted changes:
 
-### Requirements
-
-Use the `bin/` directory from an
-[UltraScan Desktop](https://github.com/ehb54/ultrascan3) installation or build.
-The directory must contain these executables:
-
-- `us_sim_inputs_gen`
-- `us_astfem_sim`
-- `us_mwl_species_sim`
-
-The adjacent UltraScan `etc/` directory must also contain the rotor and
-centerpiece definitions used by the simulations. This repository does not
-vendor those binaries or reference files.
-
-### Commands
-
-Run commands from the repository root:
-
-```bash
-# Generate the standard base dataset.
-python3 scripts/generate_synthetic_data.py --us-bin-dir /path/to/ultrascan/bin
-
-# Generate the smaller samples tier.
-python3 scripts/generate_synthetic_data.py --us-bin-dir /path/to/ultrascan/bin --samples
-
-# Validate configuration without generating data.
-python3 scripts/generate_synthetic_data.py --validate
-
-# Use another spec, such as the worked examples.
-python3 scripts/generate_synthetic_data.py --spec examples --us-bin-dir /path/to/ultrascan/bin
+```text
+> Generated 2026-08-16 16:09 UTC by `scripts/test-corpus/generate_synthetic_data.py`
+> from LIMS generator commit `2201bab`.
 ```
 
-Set `US_BIN_DIR` instead of passing `--us-bin-dir` each time. Supplying the
-binary path with `--validate` also enables rotor and centerpiece checks.
-
-The generator is run manually. Review and commit its output; data is not
-created automatically at container startup or in CI.
-
-### Inputs and outputs
-
-Start with the [configuration overview](config/README.md). It explains how a
-spec assembles experiments from independently reusable models, buffers, and
-simulation parameters, including multi-channel geometry and output mapping.
-
-Without `--samples`, each experiment keeps the configured scan count and
-duration. With `--samples`, the generator reduces both according to
-`sample_defaults` and any per-experiment override in the active spec. It rejects
-zero values and values larger than the original simulation.
-
-Each run also updates the tier's `checksums.sha256` and generated `README.md`.
-Change an experiment's `description` in the spec to update its summary entry.
+That stamp is the only link from an archive back to the code that built it.
+Capture it alongside the repository tag and checksum result when recording a
+test execution.
 
 ### Data-type relabeling
 
@@ -149,9 +101,9 @@ crc = zlib.crc32(file_bytes[:-4], 0xFFFFFFFF) & 0xFFFFFFFF
 
 ### Validation and limitations
 
-`--validate` checks the spec and referenced XML inputs, including sample limits
-and simulation geometry. During type relabeling, the generator checks the
-`UCDA` file signature and recomputes the CRC. These safeguards do not establish
+Before writing a tier, the generator validates its inputs, including sample
+limits and simulation geometry, and during type relabeling it checks the `UCDA`
+file signature and recomputes the CRC. These safeguards do not establish
 scientific equivalence to an experimental run.
 
 Known limitations:
@@ -167,14 +119,21 @@ Known limitations:
 
 ### Generated data
 
-1. Follow the [configuration workflow](config/README.md#add-or-change-configuration)
-   to update an existing spec or add a compatible spec with
-   a unique `dataset_name`.
-2. Add or update model, buffer, or simulation-parameter XML only when the
-   required input does not already exist.
-3. Run the generator with `--spec <name>` when not using `base.json`. Add
-   `--samples` when updating the samples tier.
-4. Review the regenerated zip, checksum file, and README before committing.
+Steps 1 through 3 happen in the LIMS repo, not here; only the review and commit
+of the resulting artifacts happens in this repository.
+
+1. Follow the configuration workflow at
+   `scripts/test-corpus/config/README.md#add-or-change-configuration` to update
+   an existing spec or add a compatible spec with a unique `dataset_name`.
+2. Add or update model, buffer, or simulation-parameter XML under
+   `scripts/test-corpus/config/`, and only when the required input does not
+   already exist.
+3. Run the generator with `--output-root` pointing at this checkout, plus
+   `--spec <name>` when not using `base.json` and `--samples` when updating the
+   samples tier.
+4. Review the regenerated zip, checksum file, and stamped README here before
+   committing. Commit the matching configuration change in the LIMS repo too,
+   so the commit named in the stamp actually contains the inputs used.
 
 Do not edit files under `datasets/generated/` by hand. Their README and
 checksums are generator output.
@@ -201,6 +160,15 @@ shasum -a 256 *.zip > checksums.sha256
 
 ## Repository boundary
 
-This repository stores generator code, configuration, and test datasets.
-Simulation executables and runtime reference files remain in the UltraScan
-installation or build tree.
+This repository stores test datasets and their provenance: zips, checksum
+files, and generated tier READMEs.
+
+- Generator code and its configuration live in the LIMS repository
+  (private), under `scripts/test-corpus/`.
+- Simulation executables and runtime reference files remain in the UltraScan
+  installation or build tree ([`ehb54/ultrascan3`](https://github.com/ehb54/ultrascan3)),
+  and are vendored by neither repository.
+
+The split is code versus artifacts: everything executable and every generator
+input sits in the LIMS repo, so a dataset here can be versioned, pinned, and
+verified independently of the stack that consumes it.

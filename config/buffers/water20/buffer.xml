@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE US_Buffer>
-<BufferData version="1.0">
-    <buffer id="0" guid="3635f75b-6623-45c1-8d68-f27b2310971d" description="Water 20" ph="7.00000" density="0.998234" viscosity="1.00192" compressibility="0.0000e+00" manual="1">
-        <spectrum/>
-    </buffer>
-</BufferData>

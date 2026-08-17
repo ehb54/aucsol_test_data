@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE US_Model>
-<ModelData version="1.0">
-    <model description="Anellovirus (protein, compact)" modelGUID="396132a6-930e-4ab1-a192-b22b236e7d8c" editGUID="" wavelength="0" coSedSolute="-1" opticsType="0" analysisType="0" globalType="0">
-        <analyte name="Anellovirus (protein, compact)" mw="4.7e+06" s="8.76767e-12" D="1.50932e-07" f="2.68158e-07" f_f0="1.3" vbar20="0.7" extinction="0" axial="10" sigma="0" delta="0" oligomer="1" shape="0" type="0" molar="0" signal="1"/>
-    </model>
-</ModelData>

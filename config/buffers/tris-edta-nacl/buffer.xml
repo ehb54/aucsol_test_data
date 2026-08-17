@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE US_Buffer>
-<BufferData version="1.0">
-    <buffer id="0" guid="17234a89-f99f-4f62-93ae-6a831db1d48a" description="10mM Tris, 1mM EDTA, 150mM NaCl" ph="8.00000" density="1.004630" viscosity="1.01046" compressibility="0.0000e+00" manual="1">
-        <spectrum/>
-    </buffer>
-</BufferData>

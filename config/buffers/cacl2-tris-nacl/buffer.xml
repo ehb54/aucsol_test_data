@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE US_Buffer>
-<BufferData version="1.0">
-    <buffer id="0" guid="80e4b0fc-d2b2-4865-88da-5a5781e35a73" description="20mM CaCl2 50mM Tris 150mM NaCl" ph="8.51000" density="1.007770" viscosity="1.02879" compressibility="0.0000e+00" manual="1">
-        <spectrum/>
-    </buffer>
-</BufferData>

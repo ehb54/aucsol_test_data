@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE US_Model>
-<ModelData version="1.0">
-    <model description="DNA fragment, Monomer (208 bp)" modelGUID="865855e8-1356-4fc8-ac80-222b62f84e31" editGUID="" wavelength="0" coSedSolute="-1" opticsType="0" analysisType="0" globalType="0">
-        <analyte name="DNA fragment, Monomer (208 bp)" mw="128396" s="9.31825e-13" D="3.92236e-07" f="1.03187e-07" f_f0="1.8" vbar20="0.55" extinction="0" axial="10" sigma="0" delta="0" oligomer="1" shape="0" type="0" molar="0" signal="1"/>
-    </model>
-</ModelData>
