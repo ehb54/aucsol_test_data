@@ -1,7 +1,7 @@
 # Synthetic Data
 
-> Generated 2026-08-17 21:23 UTC by `scripts/test-corpus/generate_synthetic_data.py`
-> from LIMS generator commit `509958f (uncommitted local changes)`.
+> Generated 2026-08-18 13:11 UTC by `scripts/test-corpus/generate_synthetic_data.py`
+> from LIMS generator commit `f1e9ce2 (uncommitted local changes)`.
 > Do not edit by hand.
 
 UltraScan's finite-element simulators compute these datasets from the

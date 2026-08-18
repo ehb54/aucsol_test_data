@@ -1,7 +1,7 @@
 # Synthetic Samples
 
-> Generated 2026-08-17 20:58 UTC by `scripts/test-corpus/generate_synthetic_data.py`
-> from LIMS generator commit `509958f (uncommitted local changes)`.
+> Generated 2026-08-18 13:11 UTC by `scripts/test-corpus/generate_synthetic_data.py`
+> from LIMS generator commit `f1e9ce2 (uncommitted local changes)`.
 > Do not edit by hand.
 
 This is the smaller companion to the [standard synthetic dataset](../). It uses
