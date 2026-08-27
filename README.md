@@ -4,17 +4,18 @@ Public `.auc` datasets for UltraScan system testing. The repository contains
 synthetic simulator output and curated reference data; it does not contain
 customer, patient, or proprietary third-party data.
 
-This repository holds **data artifacts only**. The generator that produces the
-synthetic datasets, and the model, buffer, and simulation-parameter
-configuration it reads, are maintained separately and are not part of this
-repository. Nothing here is executable.
+This repository holds **data artifacts only**: dataset archives, checksums, and
+documentation. Nothing here is executable.
 
 ## Choose a dataset
 
 | Dataset | Use case |
 |---|---|
-| [`datasets/generated/base/`](datasets/generated/base/) | Standard synthetic runs using the checked-in simulation parameters |
+| [`datasets/generated/base/`](datasets/generated/base/) | Standard full-size synthetic runs |
 | [`datasets/generated/base/samples/`](datasets/generated/base/samples/) | Smaller synthetic runs for tests that do not need full datasets |
+| [`datasets/generated/examples/`](datasets/generated/examples/) | Synthetic examples of supported experiment layouts |
+| [`datasets/generated/mpi/`](datasets/generated/mpi/) | Synthetic MPI analysis fixtures |
+| [`datasets/generated/noise/`](datasets/generated/noise/) | Synthetic noise-model fixtures |
 | [`datasets/manual/`](datasets/manual/) | Curated reference datasets added by hand |
 
 ## Get and verify the data
@@ -65,24 +66,9 @@ Checksum verified: PASS
 ```
 
 Pin reproducible workflows to a repository tag rather than a moving branch.
-The root `VERSION` file records the current version.
+The root [`VERSION`](VERSION) file records the current version.
 
 ## About the generated data
-
-### Which revision produced a dataset
-
-Because the data and the generator now live in separate repositories, each
-generated tier's `README.md` is stamped with the LIMS generator commit that
-produced it, and with whether that working tree had uncommitted changes:
-
-```text
-> Generated 2026-08-16 16:09 UTC by `scripts/test-corpus/generate_synthetic_data.py`
-> from LIMS generator commit `2201bab`.
-```
-
-That stamp is the only link from an archive back to the code that built it.
-Capture it alongside the repository tag and checksum result when recording a
-test execution.
 
 ### Data-type relabeling
 
@@ -101,47 +87,29 @@ crc = zlib.crc32(file_bytes[:-4], 0xFFFFFFFF) & 0xFFFFFFFF
 
 ### Validation and limitations
 
-Before writing a tier, the generator validates its inputs, including sample
-limits and simulation geometry, and during type relabeling it checks the `UCDA`
-file signature and recomputes the CRC. These safeguards do not establish
-scientific equivalence to an experimental run.
+The generated archives are test fixtures. Their presence and checksums do not
+establish scientific equivalence to an experimental run.
 
 Known limitations:
 
 - **Wavelength scans (`wi`):** The synthetic `wi` fixture is a relabeled
   radius-based file. It has the correct type tag but not a true wavelength
-  x-axis because `us_astfem_sim` has no native wavelength-scan mode. Its model
-  is a simulation placeholder.
-- **Signal magnitude:** Checked-in models default to `signal="1"`. Use a
-  channel's `signal` field in the spec to test another magnitude.
+  x-axis. It is a simulation placeholder.
 
 ## Add or update data
 
 ### Generated data
 
-Steps 1 through 3 happen in the LIMS repo, not here; only the review and commit
-of the resulting artifacts happens in this repository.
+When importing newly generated data:
 
-1. Follow the configuration workflow at
-   `scripts/test-corpus/config/README.md#add-or-change-configuration` to update
-   an existing spec or add a compatible spec with a unique `dataset_name`.
-2. Add or update model, buffer, or simulation-parameter XML under
-   `scripts/test-corpus/config/`, and only when the required input does not
-   already exist.
-3. Run the generator with `--output-root` pointing at this checkout, plus
-   `--spec <name>` when not using `base.json` and `--samples` when updating the
-   samples tier.
-4. Review the regenerated zip, checksum file, and stamped README here before
-   committing. Commit the matching configuration change in the LIMS repo too,
-   so the commit named in the stamp actually contains the inputs used.
-
-Do not edit files under `datasets/generated/` by hand. Their README and
-checksums are generator output.
+1. Import the archives, tier README, and `checksums.sha256` together under the
+   appropriate directory in `datasets/generated/`.
+2. Verify the checksum file before committing.
 
 ### Curated reference data
 
-1. Add or replace the zip under
-   `datasets/manual/US_TD_NNN_Short_Description/`.
+1. Add or replace the zip under the appropriate directory in
+   `datasets/manual/`.
 2. Regenerate the containing directory's `checksums.sha256`.
 3. Document the dataset's provenance, de-identification, contents, and known
    limitations when supporting documentation is present.
@@ -158,17 +126,6 @@ On macOS:
 shasum -a 256 *.zip > checksums.sha256
 ```
 
-## Repository boundary
+## Repository contents
 
-This repository stores test datasets and their provenance: zips, checksum
-files, and generated tier READMEs.
-
-- Generator code and its configuration live in the LIMS repository
-  (private), under `scripts/test-corpus/`.
-- Simulation executables and runtime reference files remain in the UltraScan
-  installation or build tree ([`ehb54/ultrascan3`](https://github.com/ehb54/ultrascan3)),
-  and are vendored by neither repository.
-
-The split is code versus artifacts: everything executable and every generator
-input sits in the LIMS repo, so a dataset here can be versioned, pinned, and
-verified independently of the stack that consumes it.
+This repository stores test dataset zips, checksum files, and dataset READMEs.
