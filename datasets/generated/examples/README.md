@@ -1,14 +1,14 @@
 # Synthetic Data
 
-> Generated 2026-08-27 13:13 UTC by `scripts/test-corpus/generate_synthetic_data.py`
-> from LIMS generator commit `1e1d44a (uncommitted local changes)`.
+> Generated 2026-08-27 13:13 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/1e1d44a/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `1e1d44a` with uncommitted generator/input changes.
 > Do not edit by hand.
 
 UltraScan's finite-element simulators compute these datasets from the
 generator's checked-in models, buffers, and simulation parameters. This
 standard tier keeps each experiment's configured scan count and duration.
 
-See [Generating synthetic data](../../../README.md#generate-synthetic-data) for
+See [About the generated data](../../../README.md#about-the-generated-data) for
 the generation method, inputs, and known limitations.
 
 The generator's `config/specs/examples.json` defines this dataset. Its `dataset_name` selects

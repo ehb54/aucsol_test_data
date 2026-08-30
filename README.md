@@ -21,7 +21,7 @@ documentation. Nothing here is executable.
 ## Get and verify the data
 
 ```bash
-git clone git@github.com:ehb54/aucsol_test_data.git
+git clone https://github.com/ehb54/aucsol_test_data.git
 cd aucsol_test_data
 ```
 
@@ -76,8 +76,8 @@ The UltraScan simulators write `RA`-tagged `.auc` files. For other test
 categories, the generator changes the two-byte type at offset 6 and recomputes
 the trailing little-endian CRC-32.
 
-UltraScan's first CRC call produces an effective initial register of `0`. The
-equivalent Python calculation is:
+UltraScan seeds this CRC calculation with `0xFFFFFFFF`, rather than zlib's
+default initial value of `0`. The equivalent Python calculation is:
 
 ```python
 import zlib
@@ -105,6 +105,11 @@ When importing newly generated data:
 1. Import the archives, tier README, and `checksums.sha256` together under the
    appropriate directory in `datasets/generated/`.
 2. Verify the checksum file before committing.
+
+Generated provenance must identify a committed generator revision. Output
+marked as having uncommitted generator or input changes is suitable for
+development only and must be regenerated from a clean revision before a
+versioned release is tagged.
 
 ### Curated reference data
 

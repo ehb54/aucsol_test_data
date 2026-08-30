@@ -1,7 +1,7 @@
 # Synthetic Samples
 
-> Generated 2026-08-27 13:13 UTC by `scripts/test-corpus/generate_synthetic_data.py`
-> from LIMS generator commit `1e1d44a (uncommitted local changes)`.
+> Generated 2026-08-27 13:13 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/1e1d44a/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `1e1d44a` with uncommitted generator/input changes.
 > Do not edit by hand.
 
 This is the smaller companion to the [standard synthetic dataset](../). It uses
@@ -11,7 +11,7 @@ the generator's `config/specs/base.json` and any experiment-level `samples` valu
 these limits.
 
 Use this tier for tests that do not need a full multi-scan run. See
-[Generating synthetic data](../../../../README.md#generate-synthetic-data) for
+[About the generated data](../../../../README.md#about-the-generated-data) for
 the method and known limitations.
 
 ## Contents
