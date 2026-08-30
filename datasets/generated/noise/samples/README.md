@@ -11,7 +11,7 @@ the generator's `config/specs/noise.json` and any experiment-level `samples` val
 these limits.
 
 Use this tier for tests that do not need a full multi-scan run. See
-[About the generated data](../../../../README.md#about-the-generated-data) for
+[Generating synthetic data](../../../../README.md#generate-synthetic-data) for
 the method and known limitations.
 
 ## Contents

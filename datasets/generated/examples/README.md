@@ -8,7 +8,7 @@ UltraScan's finite-element simulators compute these datasets from the
 generator's checked-in models, buffers, and simulation parameters. This
 standard tier keeps each experiment's configured scan count and duration.
 
-See [About the generated data](../../../README.md#about-the-generated-data) for
+See [Generating synthetic data](../../../README.md#generate-synthetic-data) for
 the generation method, inputs, and known limitations.
 
 The generator's `config/specs/examples.json` defines this dataset. Its `dataset_name` selects

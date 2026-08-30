@@ -68,6 +68,14 @@ Checksum verified: PASS
 Pin reproducible workflows to a repository tag rather than a moving branch.
 The root [`VERSION`](VERSION) file records the current version.
 
+## Generate synthetic data
+
+Each generated tier README identifies and links the LIMS generator revision
+used for that tier and gives the corresponding regeneration command. Run that
+command from the generator repository root, supplying this checkout as its
+output root. Generated archives, tier documentation, and checksums must be
+imported and reviewed together.
+
 ## About the generated data
 
 ### Data-type relabeling
