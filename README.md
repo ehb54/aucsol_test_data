@@ -70,11 +70,12 @@ The root [`VERSION`](VERSION) file records the current version.
 
 ## Generate synthetic data
 
-Each generated tier README identifies and links the LIMS generator revision
-used for that tier and gives the corresponding regeneration command. Run that
-command from the generator repository root, supplying this checkout as its
-output root. Generated archives, tier documentation, and checksums must be
-imported and reviewed together.
+Synthetic tiers are produced by the
+[`uslims_stack` test-corpus tooling](https://github.com/ehb54/uslims_stack/tree/1e1d44a/scripts/test-corpus).
+Its [generation guide](https://github.com/ehb54/uslims_stack/blob/1e1d44a/scripts/test-corpus/test-corpus-pipeline.md)
+documents the required inputs, commands, and validation process. Each tier
+README records the generator revision and command used for that dataset.
+Publish the resulting archives, tier README, and checksum manifest together.
 
 ## About the generated data
 
