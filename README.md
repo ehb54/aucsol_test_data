@@ -68,15 +68,6 @@ Checksum verified: PASS
 Pin reproducible workflows to a repository tag rather than a moving branch.
 The root [`VERSION`](VERSION) file records the current version.
 
-## Generate synthetic data
-
-Synthetic tiers are produced by the
-[`uslims_stack` test-corpus tooling](https://github.com/ehb54/uslims_stack/tree/1e1d44a/scripts/test-corpus).
-Its [generation guide](https://github.com/ehb54/uslims_stack/blob/1e1d44a/scripts/test-corpus/test-corpus-pipeline.md)
-documents the required inputs, commands, and validation process. Each tier
-README records the generator revision and command used for that dataset.
-Publish the resulting archives, tier README, and checksum manifest together.
-
 ## About the generated data
 
 ### Data-type relabeling
