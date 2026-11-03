@@ -1,7 +1,7 @@
 # Synthetic Data
 
-> Generated 2026-08-27 13:13 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/1e1d44a/scripts/test-corpus/generate_synthetic_data.py)
-> from `uslims_stack` commit `1e1d44a` with uncommitted generator/input changes.
+> Generated 2026-11-03 10:57 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/7c37c2e/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `7c37c2e`.
 > Do not edit by hand.
 
 UltraScan's finite-element simulators compute these datasets from the
@@ -30,7 +30,7 @@ separate sibling datasets.
 | `tb06-wide-range` | `boundary/tb06_wide_range/tb06-wide-range_synthetic.zip` | RA | Eight solutes spanning the full s and k box, for depth promotion (TB-06) — 1A: RA; s ≈ 1.0 + 3.0 + 5.5 + 8.0 + 11.0 + 14.0 + 17.0 + 20.0 S |
 | `tb08-out-of-bucket` | `boundary/tb08_out_of_bucket/tb08-out-of-bucket_synthetic.zip` | RA | Solute at s=15S k=2.0, outside GA buckets covering s=1-10S (TB-08) — 1A: RA; s ≈ 15.0 S |
 | `tb11-uniform` | `boundary/tb11_uniform/tb11-uniform_synthetic.zip` | RA | Four near-uniform solutes, for mrecs sort stability (TB-11) — 1A: RA; s ≈ 5.0 + 5.0 + 5.0 + 5.0 S |
-| `t2-2dsa-ms` | `variants/multispeed/t2-2dsa-ms_synthetic.zip` | RA | Two speed steps, 40,000 then 50,000 rpm, one RA channel, persisted as the two runs t2-2dsa-ms-40000 and t2-2dsa-ms-50000 (T2-2DSA-MS, T2-GA-MS, T2-PCSA-MS) — 1A: RA; s ≈ 2.5 + 5.0 + 9.0 + 14.0 S |
+| `t2-2dsa-ms` | `variants/multispeed/t2-2dsa-ms_synthetic.zip` | RA | Two speed steps, 40,000 then 50,000 rpm, one RA channel, persisted as the two runs t2-2dsa-ms-040000 and t2-2dsa-ms-050000 (T2-2DSA-MS, T2-GA-MS, T2-PCSA-MS) — 1A: RA; s ≈ 2.5 + 5.0 + 9.0 + 14.0 S |
 | `t2-2dsa-cg` | `variants/custom_grid/t2-2dsa-cg_synthetic.zip` | RA | Data axis for the custom-grid cells; the CG_model itself is a config-axis artifact (T2-2DSA-CG and its -IT/-MC variants) — 1A: RA; s ≈ 2.5 + 5.0 + 9.0 + 14.0 S |
 | `t2-dmga-reacting` | `variants/dmga_reacting/t2-dmga-reacting_synthetic.zip` | RA | Reversible BSA monomer-dimer at K_d=1e-6 M, the production DMGA data shape — 1A: RA; s ≈ 4.7 + 7.5 S; 2A: RA; s ≈ 4.7 + 7.5 S |
 
