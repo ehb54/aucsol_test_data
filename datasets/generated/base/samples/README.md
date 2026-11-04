@@ -1,7 +1,7 @@
 # Synthetic Samples
 
-> Generated 2026-11-03 08:41 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/f19d148/scripts/test-corpus/generate_synthetic_data.py)
-> from `uslims_stack` commit `f19d148`.
+> Generated 2026-11-04 14:59 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/945d18d/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `945d18d`.
 > Do not edit by hand.
 
 This is the smaller companion to the [standard synthetic dataset](../). It uses
@@ -20,6 +20,7 @@ the method and known limitations.
 |---|---|---|---|
 | `netrin1-ra` | `ra/netrin1-ra_sample_synthetic.zip` | RA | Netrin1 (protein, globular) — 1A: RA; s ≈ 4.3 S |
 | `dna-monomer-208bp-ri` | `ri/dna-monomer-208bp-ri_sample_synthetic.zip` | RI | DNA fragment, Monomer 208bp (extended) — 1A: RI; s ≈ 5.9 S |
+| `dna-monomer-208bp-ri-low-meniscus` | `ri/dna-monomer-208bp-ri-low-meniscus_sample_synthetic.zip` | RI | DNA fragment, Monomer 208bp; regression case: meniscus below the automatic GMP edit window — 1A: RI; s ≈ 5.9 S |
 | `anellovirus-ip` | `ip/anellovirus-ip_sample_synthetic.zip` | IP | Anellovirus (large protein/virus, compact) — 1A: IP; s ≈ 87.7 S |
 | `sma-nanodisk-fi` | `fi/sma-nanodisk-fi_sample_synthetic.zip` | FI | SMA Nanodisk — 1A: FI; s ≈ 3.5 S |
 | `small-molecule-placeholder-wi` | `wi/small-molecule-placeholder-wi_sample_synthetic.zip` | WI | Small-molecule calibration placeholder — 1A: WI; s ≈ 0.24 S |

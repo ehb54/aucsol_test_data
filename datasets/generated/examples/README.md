@@ -1,7 +1,7 @@
 # Synthetic Data
 
-> Generated 2026-11-03 08:42 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/f19d148/scripts/test-corpus/generate_synthetic_data.py)
-> from `uslims_stack` commit `f19d148`.
+> Generated 2026-11-04 14:59 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/945d18d/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `945d18d`.
 > Do not edit by hand.
 
 UltraScan's finite-element simulators compute these datasets from the

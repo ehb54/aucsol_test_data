@@ -1,7 +1,7 @@
 # Synthetic Samples
 
-> Generated 2026-11-03 10:57 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/7c37c2e/scripts/test-corpus/generate_synthetic_data.py)
-> from `uslims_stack` commit `7c37c2e`.
+> Generated 2026-11-04 16:24 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/945d18d/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `945d18d`.
 > Do not edit by hand.
 
 This is the smaller companion to the [standard synthetic dataset](../). It uses
