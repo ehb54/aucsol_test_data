@@ -70,11 +70,27 @@ The root [`VERSION`](VERSION) file records the current version.
 
 ## About the generated data
 
-### Data-type relabeling
+### Optical data types
 
-The UltraScan simulators write `RA`-tagged `.auc` files. For other test
-categories, the generator changes the two-byte type at offset 6 and recomputes
-the trailing little-endian CRC-32.
+The simulators write each optical system's data in its own form:
+
+- **`RA`**: absorbance on the instrument's radial window, clipped at an OD
+  limit where the bottom of the cell piles up.
+- **`RI`**: intensities, the sample sector on its channel and the reference
+  sector on the partner channel (A/B, C/D, E/F, G/H), with counts noise.
+- **`IP`**: interference fringes on the interference detector's own grid,
+  with baseline offsets, fixed radial structure and occasional whole-fringe
+  jumps.
+- **`WI`**: wavelength scans, intensity across wavelengths at one radius,
+  with the radius stored in each scan's wavelength field.
+
+A run's cells are scanned in turn, and the recorded speed and temperature
+vary as an instrument's do. Every run of one experiment shares one time
+state.
+
+Where a simulator cannot write a type natively (an `RI` channel on B, D, F or
+H, for example), the generator simulates it as `RA`, changes the two-byte type
+at offset 6, and recomputes the trailing little-endian CRC-32.
 
 UltraScan seeds this CRC calculation with `0xFFFFFFFF`, rather than zlib's
 default initial value of `0`. The equivalent Python calculation is:
@@ -92,9 +108,11 @@ establish scientific equivalence to an experimental run.
 
 Known limitations:
 
-- **Wavelength scans (`wi`):** The synthetic `wi` fixture is a relabeled
-  radius-based file. It has the correct type tag but not a true wavelength
-  x-axis. It is a simulation placeholder.
+- **Synthetic spectra:** The `wi` wavelength scan and the multi-wavelength
+  datasets use synthetic extinction spectra, not measured compounds.
+- **RI reference sector:** A 1 OD sample puts the reference sector at about
+  38,000-41,000 counts, above the 3,600-14,000 counts measured on real Optima
+  plateaus; the sample sector is within that range.
 
 ## Add or update data
 
