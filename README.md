@@ -1,8 +1,10 @@
 # UltraScan Test Data
 
 Public `.auc` datasets for UltraScan system testing. The repository contains
-synthetic simulator output and curated reference data; it does not contain
-customer, patient, or proprietary third-party data.
+synthetic simulator output, curated reference data, and published real
+datasets redistributed under open licenses (see
+[Third-party datasets](#third-party-datasets)). It does not contain customer,
+patient, or proprietary data.
 
 This repository holds **data artifacts only**: dataset archives, checksums, and
 documentation. Nothing here is executable.
@@ -16,7 +18,22 @@ documentation. Nothing here is executable.
 | [`datasets/generated/examples/`](datasets/generated/examples/) | Synthetic examples of supported experiment layouts |
 | [`datasets/generated/mpi/`](datasets/generated/mpi/) | Synthetic MPI analysis fixtures |
 | [`datasets/generated/noise/`](datasets/generated/noise/) | Synthetic noise-model fixtures |
-| [`datasets/manual/`](datasets/manual/) | Curated reference datasets added by hand |
+| [`datasets/manual/`](datasets/manual/) | Curated reference datasets added by hand, including real instrument data |
+
+## Third-party datasets
+
+These datasets are real instrument data published by their creators on
+Zenodo under the [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
+license, and are redistributed here under the same license. Each dataset's
+README gives its full attribution, how to cite it, and any changes made.
+When you use one, cite its source.
+
+| Dataset | Creators | Source |
+|---|---|---|
+| [`US_TD_004_AcoRL600_Liposomes`](datasets/manual/US_TD_004_AcoRL600_Liposomes/) | R. A. Martin, B. Demeler | <https://doi.org/10.5281/zenodo.18827657> |
+| [`US_TD_005_LNP_mRNA`](datasets/manual/US_TD_005_LNP_mRNA/) | B. Demeler | <https://doi.org/10.5281/zenodo.17009858> |
+| [`US_TD_006_Myoglobin_BFE`](datasets/manual/US_TD_006_Myoglobin_BFE/) | L. Dobler, W. Cao, R. Martin, B. Demeler | <https://doi.org/10.5281/zenodo.19815759> |
+| [`US_TD_007_NT2RepCT_Optima_Export`](datasets/manual/US_TD_007_NT2RepCT_Optima_Export/) | D. Fedorov | <https://doi.org/10.5281/zenodo.13365377> |
 
 ## Get and verify the data
 
