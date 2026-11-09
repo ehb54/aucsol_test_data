@@ -74,8 +74,8 @@ The root [`VERSION`](VERSION) file records the current version.
 
 The simulators write each optical system's data in its own form:
 
-- **`RA`**: absorbance on the instrument's radial window, clipped at an OD
-  limit where the bottom of the cell piles up.
+- **`RA`**: absorbance on the instrument's radial window, with random noise of
+  about 0.002 OD, clipped at an OD limit where the bottom of the cell piles up.
 - **`RI`**: intensities, the sample sector on its channel and the reference
   sector on the partner channel (A/B, C/D, E/F, G/H), with counts noise.
 - **`IP`**: interference fringes on the interference detector's own grid,
