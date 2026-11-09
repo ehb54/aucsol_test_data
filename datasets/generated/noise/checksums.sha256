@@ -10,12 +10,12 @@ e451469b68fb9896a0e540e495df753dc1d605e9fad765709703f3e6314ef988  ra/ti_ri/t1-01
 9b5ee0d9d0869c69d5ff3c53f288715c2319b2e0f9ece63d62b1a5bbab55513e  ri/ti/t2-2dsa-ri-ti_synthetic.zip
 f3142cf1f2d8272b2ea0e5884b170979f5e3603a32e9e51955f850d8d58828c5  ri/ri/t2-2dsa-ri-ri_synthetic.zip
 a4f122c36378cd5fbbf5fbf9f47ccc79bbaa008e5e1da1c9d49ac083189e904b  ri/ti_ri/t1-03-ri-tiri_synthetic.zip
-18a2e96904ba695f9224a3f05e415dd56fc50b84e742cd9cb631bd3a8baa0962  fi/no_systematic/t2-2dsa-fi-nn_synthetic.zip
-c187fbc8fcc97fa212974c8da2f3753f063c976130c3261eb85caf1ecb1d2a7b  fi/ti/t1-04-fi-ti_synthetic.zip
-477a4b1c203905e22fa0f9ec54eb4b316ccfa95f88b7617e8a6e8ae6487961b9  fi/ri/t2-2dsa-fi-ri_synthetic.zip
-050dd14ab7eea1d098f52a1924dfc93780e7d96049b92d398175cb1c2e3f04bf  fi/ti_ri/t2-2dsa-fi-tiri_synthetic.zip
 3881155808e87410adae3619bdb83e541b986017768e86d790b61826f612e921  mwl/no_systematic/t2-2dsa-mwl-nn_synthetic.zip
 726029076ce070a95fbc5ac0c5b05b85f15165499381bc9b7a8ef8f9336fa6e4  mwl/ti/t2-2dsa-mwl-ti_synthetic.zip
 8f97bf35b89c17f6fb40c7d004c5398b45c4582fcd6a82fb0ba833dd944a2762  mwl/ri/t2-2dsa-mwl-ri_synthetic.zip
 45a67f417876044ec2799608c41d76f5fac67b973c54c4f17849f6d4115b7ef9  mwl/ti_ri/t1-05-mwl-tiri_synthetic.zip
 2c53c1bfe544b506cca08dedee386a8afbcc946f341f26bc2eee390e1f8f7db8  ra/global_fit/t1-07-ra-global-fit_synthetic.zip
+7e0da74e04a37e0ea10ba4872ab1482a75c0054023b95fc8636900b2e752271c  fi/no_systematic/t2-2dsa-fi-nn_synthetic.zip
+75020f04c4180c9315c88d388e0ba7ef42c3c7fd1d1ea10c5d21881fd91307e9  fi/ti/t1-04-fi-ti_synthetic.zip
+ee5fc4ce589721afcb03de6caed743daf8385fd0abbbaba3fd7b35fb9c9b8b00  fi/ri/t2-2dsa-fi-ri_synthetic.zip
+9562659a9b66f4a0200ff3d3938b01cb2bbefed5d127ea6edc36d8c0b309b3fa  fi/ti_ri/t2-2dsa-fi-tiri_synthetic.zip

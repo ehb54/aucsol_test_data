@@ -81,6 +81,9 @@ The simulators write each optical system's data in its own form:
 - **`IP`**: interference fringes on the interference detector's own grid,
   with baseline offsets, fixed radial structure and occasional whole-fringe
   jumps.
+- **`FI`**: fluorescence on the fluorescence detector's own range,
+  5.603-7.296 cm at 0.001 cm. The `base` tiers add the detector's constant
+  background (200 counts) and noise calibrated to real Optima FI runs.
 - **`WI`**: wavelength scans, intensity across wavelengths at one radius,
   with the radius stored in each scan's wavelength field.
 
