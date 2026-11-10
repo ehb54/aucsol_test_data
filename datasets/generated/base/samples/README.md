@@ -1,7 +1,7 @@
 # Synthetic Samples
 
-> Generated 2026-11-03 08:41 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/f19d148/scripts/test-corpus/generate_synthetic_data.py)
-> from `uslims_stack` commit `f19d148`.
+> Generated 2026-11-10 11:13 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/e71d498/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `e71d498`.
 > Do not edit by hand.
 
 This is the smaller companion to the [standard synthetic dataset](../). It uses
@@ -20,13 +20,14 @@ the method and known limitations.
 |---|---|---|---|
 | `netrin1-ra` | `ra/netrin1-ra_sample_synthetic.zip` | RA | Netrin1 (protein, globular) — 1A: RA; s ≈ 4.3 S |
 | `dna-monomer-208bp-ri` | `ri/dna-monomer-208bp-ri_sample_synthetic.zip` | RI | DNA fragment, Monomer 208bp (extended) — 1A: RI; s ≈ 5.9 S |
+| `dna-monomer-208bp-ri-low-meniscus` | `ri/dna-monomer-208bp-ri-low-meniscus_sample_synthetic.zip` | RI | DNA fragment, Monomer 208bp; regression case: meniscus below the automatic GMP edit window — 1A: RI; s ≈ 5.9 S |
 | `anellovirus-ip` | `ip/anellovirus-ip_sample_synthetic.zip` | IP | Anellovirus (large protein/virus, compact) — 1A: IP; s ≈ 87.7 S |
 | `sma-nanodisk-fi` | `fi/sma-nanodisk-fi_sample_synthetic.zip` | FI | SMA Nanodisk — 1A: FI; s ≈ 3.5 S |
 | `small-molecule-placeholder-wi` | `wi/small-molecule-placeholder-wi_sample_synthetic.zip` | WI | Small-molecule calibration placeholder — 1A: WI; s ≈ 0.24 S |
 | `bsa-monomer-dimer-ra` | `ra_monomer_dimer/bsa-monomer-dimer-ra_sample_synthetic.zip` | RA | BSA monomer/dimer mixture (two discrete species, 3:1 loading) — 1A: RA; s ≈ 4.6 + 6.5 S |
 | `dna-196bp-ms-ri-mwl` | `ri_mwl/dna-196bp-ms-ri-mwl_sample_synthetic.zip` | RI | DNA fragment, 196bp MS — 1A: RI; 3 wavelengths (250/280/310 nm); s ≈ 5.8 S |
 | `dna-monomer-208bp-ri-ip` | `ri_ip/dna-monomer-208bp-ri-ip_sample_synthetic.zip` | RI/IP | DNA fragment, Monomer 208bp, tagged both ways — 1A: RI + IP; s ≈ 5.9 S |
-| `multicell-demo` | `demo/multicell_demo/multicell-demo_sample_synthetic.zip` | RA, RI, IP | Multi-cell x multi-channel demo: 2 cells, 2 channels each, one channel mwl, one channel noisier — 1A: RA; s ≈ 4.3 S; 1B: RA; s ≈ 4.3 S; 2A: RI; 3 wavelengths (250/280/310 nm); s ≈ 5.9 S; 2B: IP; s ≈ 5.9 S |
+| `multicell-demo` | `demo/multicell_demo/multicell-demo_sample_synthetic.zip` | RA, RI, IP | Multi-cell x multi-channel demo: 4 cells; cells 1 and 3 absorbance, scanned in turn; cell 2 an mwl channel and an interference channel; cell 4 interference — 1A: RA; s ≈ 4.3 S; 1B: RA; s ≈ 4.3 S; 2A: RI; 3 wavelengths (250/280/310 nm); s ≈ 5.9 S; 2B: IP; s ≈ 5.9 S; 3A: RA; s ≈ 4.6 + 6.5 S; 4A: IP; s ≈ 4.3 S |
 
 ## Regenerate
 
