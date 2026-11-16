@@ -5,6 +5,9 @@
 > Simulator source: [`ehb54/ultrascan3` at `41b567c`](https://github.com/ehb54/ultrascan3/commit/41b567c420a609f2f35d9ce831fc5636dac7d386).
 > Do not edit by hand.
 
+> Multi-speed verification update: `t2-2dsa-ms` was regenerated using ASTFEM simulator [5b4c2a054](https://github.com/ehb54/ultrascan3/commit/5b4c2a054), [PR #636](https://github.com/ehb54/ultrascan3/pull/636). The sparse sample changes to prevent interpolation across speed steps; the standard archive remains byte-identical. All other archives retain the simulator baseline above.
+
+
 This is the smaller companion to the [standard synthetic dataset](../). It uses
 the same chemistry but reduces each experiment by default to 6 scans
 over 0 h 30 min. The `sample_defaults` in
