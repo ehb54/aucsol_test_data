@@ -85,47 +85,35 @@ Checksum verified: PASS
 Pin reproducible workflows to a repository tag rather than a moving branch.
 The root [`VERSION`](VERSION) file records the current version.
 
-## Simulator revalidation (2026-11-16)
+## Generated corpus provenance
 
-All eight generated tiers (base, noise, mpi and examples, standard and samples)
-were regenerated with UltraScan `ff5160d4b8e59c41577211be1772dd272f05d66a`
-(PR #616). The generator checkout was `uslims_stack`
-`c65fd4c023719a3890dec2a1d4094f178162268d`; its `scripts/test-corpus` files
-are unchanged from the previous generator revision `e71d498`.
-Generation used macOS arm64, Qt 6.10.1, a Release build, one simulation thread,
-and isolated UltraScan settings and work directories.
+The generated tiers use the source tree of
+[`ehb54/ultrascan3` at `41b567c`](https://github.com/ehb54/ultrascan3/commit/41b567c420a609f2f35d9ce831fc5636dac7d386)
+and the [LIMS generator at `8d44b41`](https://github.com/ehb54/uslims_stack/tree/8d44b412d85062f23c2b4c7a1fdb51e2c80e5012/scripts/test-corpus).
+The build uses macOS arm64, Qt 6.10.1, Release mode and one simulation thread,
+with isolated UltraScan settings and work directories. The tier READMEs
+record their generation timestamp and generator revision.
 
-Compared with test-data commit `a786f5490c0286fedf5c2e54e59675a315027040`:
+The generator applies FI saturation after noise/background and sets an edit
+limit below the ceiling. It aligns MWL speed-step endpoints with the saved
+TimeState and checks every experiment's endpoint omega-squared-time against
+that history, including WI telemetry and individual multi-speed runs. These
+checks run before packaging; inconsistent serialized output fails generation.
+They do not rewrite the recorded scan times or the shared TimeState.
 
-- All 180 `.auc` files and all 114 binary TimeState files are byte-identical.
-  This includes FI signals/noise, RI intensities, interference, wavelength
-  scans, and the reacting MPI fixture.
-- Six experiment XML speed-step records in four archives now match the
-  TimeState endpoint. The old metadata extended ten seconds beyond it.
-  `timelast`, duration and `w2tlast` change; the recorded scans do not.
-- 154 analyte XML files change only integer frequency formatting (for example,
-  `280.0` to `280`), with no numerical difference.
-- Every other archived file is byte-identical. Real datasets are unchanged.
+Validation for these artifacts:
 
-| Archive (both standard and samples) | Corrected experiment metadata | Old → new `timelast` (seconds) |
-|---|---|---|
-| `base/demo/multicell_demo/multicell-demo` | RA and IP | Standard: 9020 → 9010; samples: 3620 → 3610 |
-| `noise/ra/global_fit/t1-07-ra-global-fit` | RA | Standard: 9020 → 9010; samples: 1820 → 1810 |
+- Two complete generations reproduce all 100 archives byte for byte.
+- All eight generated checksum manifests and all 180 AUC CRCs pass.
+- All 114 experiment records pass the TimeState endpoint checks.
+- `us_import_run --dry-run` accepts all 114 runs.
+- All 68 generator regression tests and all six config specs pass, including
+  rotor/centerpiece geometry checks. The generator repository runs its tests
+  and spec validation in CI whenever generator code or inputs change.
 
-Validation of this revision:
-
-- Two complete generations produced byte-identical copies of all 100 archives.
-- All eight generated checksum manifests pass; every generated AUC CRC passes.
-- `us_import_run --dry-run` accepts all 114 runs, using the new build.
-- Each corrected speed-step endpoint and `w2tlast` agrees with its TimeState.
-- Both simulator optics test suites pass, including scheduled multi-speed
-  regression coverage. All 64 generator tests pass and all six config specs
-  validate without the optional hardware geometry checks.
-
-Database imports, mock Optima loads and MPI fits were not rerun for this
-revision. Earlier PR #4 validation used the previous corpus; this run verifies
-unchanged scan/TimeState content and the corrected metadata through the
-importer's dry-run path. No input config changes were needed.
+This validation does not include database writes, mock Optima loading or
+MPI fits. Regeneration is followed by the checks above; those downstream
+integration checks remain separate.
 
 ## About the generated data
 
@@ -154,7 +142,11 @@ The simulators write each optical system's data in its own form:
   5.603-7.296 cm at 0.001 cm (1,694 points). Past the cell bottom it reads no
   signal, only noise like the air before the meniscus. The `base` tiers add
   the detector's constant background (200 counts) and noise calibrated to
-  real Optima FI runs.
+  real Optima FI runs. Final readings are clipped at 4,095 counts, the
+  observed 12-bit ceiling, after background/noise. The edit limit is
+  4,094.95905, just below saturation so clipped readings are excluded. The
+  noise tier retains controlled low-signal FI fixtures with no background;
+  its readings stay below the same ceiling.
 - **`WI`**: wavelength scans, intensity across wavelengths at one radius,
   with the radius stored in each scan's wavelength field. A wavelength scan
   has no single wavelength, so its files keep the placeholder `123` in their
@@ -167,13 +159,17 @@ state.
 ### Examples and MPI tiers
 
 The `examples` tier illustrates experiment layouts and the `mpi` tier holds
-analysis fixtures. Neither uses the instrument window or scan schedule:
+analysis fixtures. Apart from the scheduled reacting case below, they use
+no instrument window or scan schedule:
 
 - data starts just past the meniscus (about 5.857 cm) and ends at the cell
   bottom (7.167-7.22 cm), with no air region;
-- runs have 30 scans about 306 s apart, at a constant 45,000 rpm and 20.00 °C
-  (in `mpi`, `t2-dmga-reacting` is scheduled and records varying speed and
-  temperature, like the `base` and `noise` tiers);
+- most standard runs have 30 scans about 306 s apart, at a constant
+  45,000 rpm and 20.00 °C;
+- MPI `t2-2dsa-ms` has two speed-specific runs at 40,000 and 50,000 rpm,
+  15 scans each, about 313 s apart in the standard tier;
+- MPI `t2-dmga-reacting` is scheduled and records varying speed and
+  temperature, like the `base` and `noise` tiers;
 - `IP` data uses the same 0.001 cm grid as absorbance (1,311-1,361 points),
   not the interference detector's 2,048-point grid;
 - `examples` data has no random noise. `RI` there is pseudo-absorbance, as in
@@ -198,6 +194,11 @@ The generated archives are test fixtures. Their presence and checksums do not
 establish scientific equivalence to an experimental run.
 
 Known limitations:
+
+- **Unscheduled scan headers:** examples and MPI retain the simulator's
+  integer scan seconds with omega-squared-time calculated at fractional
+  times; this can leave a half-second equivalent offset. The experiment
+  speed-step endpoint integrals, separately, are checked against TimeState.
 
 - **Synthetic spectra:** The `wi` wavelength scan and the multi-wavelength
   datasets use synthetic extinction spectra, not measured compounds.
