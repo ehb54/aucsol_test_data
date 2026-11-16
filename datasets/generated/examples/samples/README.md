@@ -1,7 +1,8 @@
 # Synthetic Samples
 
-> Generated 2026-11-10 11:13 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/e71d498/scripts/test-corpus/generate_synthetic_data.py)
-> from `uslims_stack` commit `e71d498`.
+> Generated 2026-11-16 18:20 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/c65fd4c/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `c65fd4c`.
+> Simulator: `ehb54/ultrascan3` commit `ff5160d4b8e59c41577211be1772dd272f05d66a` (PR #616).
 > Do not edit by hand.
 
 This is the smaller companion to the [standard synthetic dataset](../). It uses

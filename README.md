@@ -85,6 +85,48 @@ Checksum verified: PASS
 Pin reproducible workflows to a repository tag rather than a moving branch.
 The root [`VERSION`](VERSION) file records the current version.
 
+## Simulator revalidation (2026-11-16)
+
+All eight generated tiers (base, noise, mpi and examples, standard and samples)
+were regenerated with UltraScan `ff5160d4b8e59c41577211be1772dd272f05d66a`
+(PR #616). The generator checkout was `uslims_stack`
+`c65fd4c023719a3890dec2a1d4094f178162268d`; its `scripts/test-corpus` files
+are unchanged from the previous generator revision `e71d498`.
+Generation used macOS arm64, Qt 6.10.1, a Release build, one simulation thread,
+and isolated UltraScan settings and work directories.
+
+Compared with test-data commit `a786f5490c0286fedf5c2e54e59675a315027040`:
+
+- All 180 `.auc` files and all 114 binary TimeState files are byte-identical.
+  This includes FI signals/noise, RI intensities, interference, wavelength
+  scans, and the reacting MPI fixture.
+- Six experiment XML speed-step records in four archives now match the
+  TimeState endpoint. The old metadata extended ten seconds beyond it.
+  `timelast`, duration and `w2tlast` change; the recorded scans do not.
+- 154 analyte XML files change only integer frequency formatting (for example,
+  `280.0` to `280`), with no numerical difference.
+- Every other archived file is byte-identical. Real datasets are unchanged.
+
+| Archive (both standard and samples) | Corrected experiment metadata | Old → new `timelast` (seconds) |
+|---|---|---|
+| `base/demo/multicell_demo/multicell-demo` | RA and IP | Standard: 9020 → 9010; samples: 3620 → 3610 |
+| `noise/ra/global_fit/t1-07-ra-global-fit` | RA | Standard: 9020 → 9010; samples: 1820 → 1810 |
+
+Validation of this revision:
+
+- Two complete generations produced byte-identical copies of all 100 archives.
+- All eight generated checksum manifests pass; every generated AUC CRC passes.
+- `us_import_run --dry-run` accepts all 114 runs, using the new build.
+- Each corrected speed-step endpoint and `w2tlast` agrees with its TimeState.
+- Both simulator optics test suites pass, including scheduled multi-speed
+  regression coverage. All 64 generator tests pass and all six config specs
+  validate without the optional hardware geometry checks.
+
+Database imports, mock Optima loads and MPI fits were not rerun for this
+revision. Earlier PR #4 validation used the previous corpus; this run verifies
+unchanged scan/TimeState content and the corrected metadata through the
+importer's dry-run path. No input config changes were needed.
+
 ## About the generated data
 
 ### Optical data types
