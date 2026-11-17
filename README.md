@@ -88,11 +88,11 @@ The root [`VERSION`](VERSION) file records the current version.
 ## Generated corpus provenance
 
 The generated tiers use the source tree of
-[`ehb54/ultrascan3` at `41b567c`](https://github.com/ehb54/ultrascan3/commit/41b567c420a609f2f35d9ce831fc5636dac7d386)
-and the [LIMS generator at `8d44b41`](https://github.com/ehb54/uslims_stack/tree/8d44b412d85062f23c2b4c7a1fdb51e2c80e5012/scripts/test-corpus).
+[`ehb54/ultrascan3` at `adfb844`](https://github.com/ehb54/ultrascan3/commit/adfb84439ccf50e6ca4df0793b42a57a852e69d0)
+and the [LIMS generator at `256406d`](https://github.com/ehb54/uslims_stack/tree/256406d6a64fad43a1c083e6433797d1332972dd/scripts/test-corpus).
 The build uses macOS arm64, Qt 6.10.1, Release mode and one simulation thread,
 with isolated UltraScan settings and work directories. The tier READMEs
-record their generation timestamp and generator revision.
+record their generation timestamp, generator revision and simulator revision.
 
 The generator applies FI saturation after noise/background and sets an edit
 limit below the ceiling. It aligns MWL speed-step endpoints with the saved

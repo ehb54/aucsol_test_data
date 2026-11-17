@@ -1,12 +1,9 @@
 # Synthetic Data
 
-> Generated 2026-11-16 21:06 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/8d44b41/scripts/test-corpus/generate_synthetic_data.py)
-> from `uslims_stack` commit `8d44b41`.
-> Simulator source: [`ehb54/ultrascan3` at `41b567c`](https://github.com/ehb54/ultrascan3/commit/41b567c420a609f2f35d9ce831fc5636dac7d386).
+> Generated 2026-11-17 20:49 UTC by the [LIMS synthetic-data generator](https://github.com/ehb54/uslims_stack/blob/256406d/scripts/test-corpus/generate_synthetic_data.py)
+> from `uslims_stack` commit `256406d`.
+> Simulator source: [`ehb54/ultrascan3` at `adfb844`](https://github.com/ehb54/ultrascan3/commit/adfb84439ccf50e6ca4df0793b42a57a852e69d0).
 > Do not edit by hand.
-
-> Multi-speed verification update: `t2-2dsa-ms` was regenerated using ASTFEM simulator [5b4c2a054](https://github.com/ehb54/ultrascan3/commit/5b4c2a054), [PR #636](https://github.com/ehb54/ultrascan3/pull/636). The sparse sample changes to prevent interpolation across speed steps; the standard archive remains byte-identical. All other archives retain the simulator baseline above.
-
 
 UltraScan's finite-element simulators compute these datasets from the
 generator's checked-in models, buffers, and simulation parameters. This
